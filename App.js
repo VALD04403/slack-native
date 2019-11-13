@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
@@ -21,34 +22,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
-    padding: 8,
+    padding: 8
   },
   paragraph: {
     margin: 24,
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   image: {
     flex: 1,
-    height: 100,
-  },
+    height: 100
+  }
 });
 
 // eslint-disable-next-line arrow-parens
 const Home = props => {
   Home.propTypes = {
     focus: PropTypes.shape({
-      focused: PropTypes.bool.isRequired,
+      focused: PropTypes.bool.isRequired
     }).isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
-      toggleDrawer: PropTypes.func.isRequired,
-    }).isRequired,
+      toggleDrawer: PropTypes.func.isRequired
+    }).isRequired
   };
   Home.navigationOptions = {
     title: 'Home',
-    drawerIcon: () => <Ionicons name="md-home" size={24} color="blue" />,
+    drawerIcon: () => <Ionicons name="md-home" size={24} color="blue" />
   };
 
   return (
@@ -79,12 +80,12 @@ const Profile = props => {
   Profile.propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
-      toggleDrawer: PropTypes.func.isRequired,
-    }).isRequired,
+      toggleDrawer: PropTypes.func.isRequired
+    }).isRequired
   };
   Profile.navigationOptions = {
     title: 'Profile',
-    drawerIcon: () => <Ionicons name="md-person" size={24} color="blue" />,
+    drawerIcon: () => <Ionicons name="md-person" size={24} color="blue" />
   };
 
   return (
@@ -111,17 +112,8 @@ const Profile = props => {
 
 const navigator = createDrawerNavigator({
   Home,
-  Profile,
+  Profile
 });
 const Appcontainer = createAppContainer(navigator);
 const App = () => <Appcontainer />;
 export default App;
-
-// import React from 'react';
-
-// const App = () => (
-//   <View>
-//     <Text>hello</Text>
-//   </View>
-// );
-// export default App;
