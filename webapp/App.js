@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 // import React from 'react';
 // import { View } from 'react-native';
 // import Drawer from './Drawer';
@@ -13,13 +14,12 @@
 // export default App;
 
 /* eslint-disable comma-dangle */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,34 +43,51 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line arrow-parens
 const Home = props => {
+  // eslint-disable-next-line no-undef
+  state = {
+    channels: []
+  };
   Home.propTypes = {
-    focus: PropTypes.shape({
-      focused: PropTypes.bool.isRequired
-    }).isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
       toggleDrawer: PropTypes.func.isRequired
     }).isRequired
   };
   Home.navigationOptions = {
-    title: 'Home',
-    drawerIcon: () => <Ionicons name="md-home" size={24} color="blue" />
+    title: 'Home'
   };
 
+  // eslint-disable-next-line no-undef
+  getChannels = async () => {
+    // eslint-disable-next-line no-undef
+    const response = await fetch('/api/channels');
+    const { channels } = await response.json();
+    console.log(response);
+    // eslint-disable-next-line react/no-this-in-sfc
+    this.setState({ channels });
+  };
   return (
     <View style={styles.container}>
+      <Text>Home</Text>
       <Text
         style={styles.paragraph}
         onPress={() => {
           props.navigation.navigate('Profile');
         }}
       >
-        Go Profile
+        {this.state.channels.map(channel => (
+          <Text>
+            Go
+            {channel.name}
+          </Text>
+        ))}
       </Text>
 
       <Text
         style={styles.paragraph}
         onPress={() => {
+          // eslint-disable-next-line react/no-this-in-sfc
+          this.getChannels();
           props.navigation.toggleDrawer();
         }}
       >
@@ -89,12 +106,47 @@ const Profile = props => {
     }).isRequired
   };
   Profile.navigationOptions = {
-    title: 'Profile',
-    drawerIcon: () => <Ionicons name="md-person" size={24} color="blue" />
+    title: 'Profile'
   };
 
   return (
     <View style={styles.container}>
+      <Text>Profile</Text>
+      <Text
+        style={styles.paragraph}
+        onPress={() => {
+          props.navigation.navigate('Home');
+        }}
+      >
+        Go Home
+      </Text>
+      <Text
+        style={styles.paragraph}
+        onPress={() => {
+          props.navigation.toggleDrawer();
+        }}
+      >
+        Open side
+      </Text>
+    </View>
+  );
+};
+
+// eslint-disable-next-line arrow-parens
+const Channels = props => {
+  Channels.propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+      toggleDrawer: PropTypes.func.isRequired
+    }).isRequired
+  };
+  Profile.navigationOptions = {
+    title: 'Channels'
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Channels</Text>
       <Text
         style={styles.paragraph}
         onPress={() => {
@@ -117,7 +169,8 @@ const Profile = props => {
 
 const navigator = createDrawerNavigator({
   Home,
-  Profile
+  Profile,
+  Channels
 });
 const Appcontainer = createAppContainer(navigator);
 const Drawer = () => <Appcontainer />;
